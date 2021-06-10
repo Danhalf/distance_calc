@@ -12,79 +12,27 @@
       href="https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.css"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="./style.css" />
   </head>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-    }
-
-    #map {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      width: 100%;
-    }
-
-    #map-overlay {
-      position: absolute;
-      top: 0;
-      right: 0;
-      background: rgba(255, 255, 255, 0.8);
-      margin-right: 20px;
-      margin-top: 20px;
-      padding: 10px 0 0 10px;
-      font-family: Arial, sans-serif;
-      overflow: auto;
-      width: 200px;
-      height: 50px;
-      border-radius: 3px;
-    }
-  </style>
 
   <body>
-    <div id="map"></div>
-    <div id="map-overlay">Distance:</div>
-    <script>
-      mapboxgl.accessToken =
-        'pk.eyJ1IjoiZGFuaGFsZiIsImEiOiJja3A2dzhnOHAwdW93MndxdHVsa3dxOXFpIn0.or1NJxIWSuvz3VPQjPXhmA';
-      var map = new mapboxgl.Map({
-        container: 'map', // container id
-        style: 'mapbox://styles/mapbox/streets-v11',
-        center: [30.974, 49.915],
-        zoom: 5,
-      });
+    <section class="distance-calculator">
+      <div class="calculator-map">
+        <div id="map"></div>
+      </div>
+      <div class="calculator-data">
+        <select name="region" id="calc-region">
+          <option value="30.95553, 50.34845">Бориспіль</option>
+          <option value="30.99553, 50.39845">хз</option>
+        </select>
+        <select name="village" id="calc-village">
+          <option value="">333</option>
+          <option value="">555</option>
+        </select>
+        <div id="map-overlay">Distance:</div>
+      </div>
+    </section>
 
-      //YOUR TURN: Replace var to = [lng, lat] with the lng/lat for Madison, WI [-89.384, 43.101]
-      //YOUR TURN: Replace var to = [lng, lat] with the lng/lat for Chicago, Il [-87.627, 41.919]
-
-      var to = [30.160912, 50.326342]; //lng, lat
-      var from = [30.974, 49.915]; //lng, lat
-
-      var greenMarker = new mapboxgl.Marker({
-        color: 'green',
-      })
-        .setLngLat(to) // marker position using variable 'to'
-        .addTo(map); //add marker to map
-
-      var purpleMarker = new mapboxgl.Marker({
-        color: 'purple',
-      })
-        .setLngLat(from) // marker position using variable 'from'
-        .addTo(map); //add marker to map
-
-      var options = {
-        units: 'kilometers',
-      }; // units can be degrees, radians, miles, or kilometers, just be sure to change the units in the text box to match.
-
-      var distance = turf.distance(to, from, options);
-
-      var value = document.getElementById('map-overlay');
-      value.innerHTML = `Відстань: ${distance.toFixed([
-        2,
-      ])} кілометрів, орієнтована вартість доставки: ${(distance * 22).toFixed([
-        2,
-      ])} грн`;
-    </script>
+    <script src="./script.js"></script>
   </body>
 </html>
