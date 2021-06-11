@@ -6,8 +6,8 @@
     <title>Point Distance</title>
     <meta name="description" content="" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script src="https://unpkg.com/@turf/turf/turf.min.js"></script>
-    <script src="https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.js"></script>
+    <!-- <script src="https://unpkg.com/@turf/turf/turf.min.js"></script>
+    <script src="https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.js"></script> -->
     <link
       href="https://api.mapbox.com/mapbox-gl-js/v1.11.0/mapbox-gl.css"
       rel="stylesheet"
@@ -21,9 +21,16 @@
         <div id="map"></div>
       </div>
       <div class="calculator-data">
+      
         <select name="region" id="calc-region">
-          <option value="30.99553, 50.39845">хз</option>
-          <option value="30.95553, 50.34845">Бориспіль</option>
+          <?php
+            // $get_cities = file_get_contents('./cities_bd.json');
+            // $cities = json_decode($get_cities, true);
+            // $selected_village = string;
+            // foreach ($cities as $city_name=>$city_coord) {
+            //   echo "<option value='$city_coord[0], $city_coord[1]'>$city_name</option>";
+            // }
+          ?>          
         </select>
         <select name="village" id="calc-village">
           <option value="">333</option>
@@ -32,7 +39,8 @@
         <div id="map-overlay">Distance:</div>
       </div>
     </section>
-
-    <script src="./script.js"></script>
+    
+    <script src="./select.js"></script>
+    <!-- <script src="./script.js"></script> -->
   </body>
 </html>
