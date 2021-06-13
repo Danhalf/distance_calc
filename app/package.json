@@ -1,0 +1,12 @@
+{
+  "name": "distanceCalc",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/Danhalf/distance_calc.git",
+  "author": "Danhalf <danhel@rocketmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "browser-sync": "^2.26.14",
+    "gulp": "^4.0.2"
+  }
+}
