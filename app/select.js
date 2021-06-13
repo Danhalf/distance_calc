@@ -1,14 +1,15 @@
 import { citiesData } from "./api.js";
+import { mapAPI } from "./map.js";
+
 
 const selectRegion = document.querySelector('#calc-region');
 const selectVillage = document.querySelector('#calc-village');
-
-
-// const selectedOption = sel => [sel.options[sel.selectedIndex].text, sel.options[sel.selectedIndex].value];
+export let coordinates;
 
 const citiesList = await citiesData();
 
-const selectedOption = sel => [sel.options[sel.selectedIndex].text, sel.options[sel.selectedIndex].value];
+const selectedOption = sel => sel.options[sel.selectedIndex].value;
+
 
 const fillSelect = (select, cities) => {
 
@@ -32,12 +33,12 @@ const fillSelect = (select, cities) => {
 }
 
 
+
 fillSelect(selectRegion, citiesList)
 
 
 selectRegion.addEventListener('change', () => {
-  const optionValue = selectedOption(selectRegion)
-  const [, cityValue] = optionValue;
+  const cityValue = selectedOption(selectRegion)
   selectVillage.innerHTML = null;
   const cities = citiesList.get(cityValue);
   const list = new Map();
@@ -51,13 +52,15 @@ selectRegion.addEventListener('change', () => {
   } else {
     selectVillage.disabled = true;
     selectVillage.classList.remove('visible');
-    console.log(selectedOption(selectRegion))
+    coordinates = cityValue;
+    document.getElementById('map-overlay').textContent = coordinates;
+    mapAPI(coordinates)
   };
   fillSelect(selectVillage, list)
-  // selectVillage.disabled = false;
 });
 
 selectVillage.addEventListener('change', () => {
-  // const [, cityValue] = optionValue;
-  console.log(selectedOption(selectVillage))
+  coordinates = selectedOption(selectVillage);
+  document.getElementById('map-overlay').textContent = coordinates;
+  mapAPI(coordinates)
 })
