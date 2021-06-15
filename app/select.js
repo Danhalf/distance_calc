@@ -37,7 +37,8 @@ fillSelect(selectRegion, citiesList);
 
 selectRegion.addEventListener('change', () => {
   const [cityName, cityValue] = selectedOption(selectRegion);
-  selectVillage.innerHTML = null;
+  selectVillage.innerHTML =
+    '<option hidden disabled selected value> -- Виберіть поселення -- </option>';
   const cities = citiesList.get(cityValue);
   const list = new Map();
   for (const city in cities) {

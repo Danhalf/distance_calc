@@ -18,8 +18,12 @@
   <body>
     <section class="distance-calculator">
       <div class="calculator-data">
-        <select name="region" id="calc-region"></select>
-        <select disabled name="village" id="calc-village"></select>
+        <select name="region" id="calc-region">
+        <option hidden disabled selected value> -- Виберіть місто або район -- </option>
+        </select>
+        <select disabled name="village" id="calc-village">
+        <option hidden disabled selected value> -- Виберіть поселення -- </option>
+        </select>
         <div id="map-overlay"></div>
         <button id="send">На сервер</button>
       </div>
