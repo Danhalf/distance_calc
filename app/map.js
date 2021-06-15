@@ -1,4 +1,3 @@
-
 const API_KEY =
   'pk.eyJ1IjoiZGFuaGFsZiIsImEiOiJja3A2dzhnOHAwdW93MndxdHVsa3dxOXFpIn0.or1NJxIWSuvz3VPQjPXhmA';
 const fromPoint = [30.160912, 50.326342];
@@ -6,17 +5,16 @@ const fromPoint = [30.160912, 50.326342];
 mapboxgl.accessToken = API_KEY;
 
 export const mapAPI = (coordinates) => {
-  console.log(coordinates)
   const map = new mapboxgl.Map({
     container: 'map', // container id
     style: 'mapbox://styles/mapbox/streets-v11',
     center: [30.50912, 50.326342],
-    zoom: 8,
+    zoom: 5,
   });
   map.scrollZoom.disable();
 
   coordinates = coordinates.split(',');
-  console.log(coordinates)
+  console.log(coordinates);
   const [lng, lan] = coordinates;
 
   const from = fromPoint; //lng, lat
@@ -30,7 +28,7 @@ export const mapAPI = (coordinates) => {
     .setLngLat(to) // marker position using variable 'to'
     .addTo(map); //add marker to map
 
-  const purpleMarker = new mapboxgl.Marker({
+  const markerFrom = new mapboxgl.Marker({
     color: '#007336',
   })
     .setLngLat(from) // marker position using variable 'from'
@@ -52,10 +50,15 @@ export const mapAPI = (coordinates) => {
 
   const distance = turf.distance(to, from, options);
 
-  const value = document.getElementById('map-overlay');
-  value.innerHTML = `Відстань: ${~~distance} кілометрів, орієнтована вартість доставки: ${~~(
+  const mapOverlay = document.getElementById('map-overlay');
+  mapOverlay.innerHTML = `Відстань: ${~~distance} кілометрів, орієнтована вартість доставки: ${~~(
     distance * pricePerKm
   )} грн`;
-}
+
+  return [
+    `${~~distance} км`,
+    `${~~(distance * pricePerKm)} грн. При цене ${pricePerKm} грн за км.`,
+  ];
+};
 
 // export default mapAPI()

@@ -4,8 +4,9 @@ body {
 }
 
 .distance-calculator {
-  height: 800px;
+  height: 300px;
   display: flex;
+  width: 600px;
 }
 
 .calculator-map {

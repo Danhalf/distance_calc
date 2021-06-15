@@ -15,18 +15,17 @@ const browserSync = require('browser-sync').create();
 // or...
 
 gulp.task('browser-sync', function () {
-   browserSync.init({
-      proxy: "distancecalc/",
-      notify: false
-   });
-
+  browserSync.init({
+    // proxy: "distancecalc/",
+    proxy: 'rangecalc/',
+    notify: false,
+  });
 });
 
 gulp.task('watch', () => {
-   gulp.watch("*.php").on("change", browserSync.reload);
-   gulp.watch("*.js").on("change", browserSync.reload);
-   gulp.watch("*.css").on("change", browserSync.reload);
+  gulp.watch('*.php').on('change', browserSync.reload);
+  gulp.watch('*.js').on('change', browserSync.reload);
+  gulp.watch('*.css').on('change', browserSync.reload);
 });
 
-
-gulp.task('default', gulp.parallel('browser-sync', 'watch'))
+gulp.task('default', gulp.parallel('browser-sync', 'watch'));

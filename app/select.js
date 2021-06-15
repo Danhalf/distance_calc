@@ -1,66 +1,84 @@
-import { citiesData } from "./api.js";
-import { mapAPI } from "./map.js";
-
+import { citiesData } from './api.js';
+import { mapAPI } from './map.js';
 
 const selectRegion = document.querySelector('#calc-region');
 const selectVillage = document.querySelector('#calc-village');
-export let coordinates;
+let coordinates = '30.160912, 50.326342';
+let deliveryPoint = {};
 
 const citiesList = await citiesData();
 
-const selectedOption = sel => sel.options[sel.selectedIndex].value;
+const selectedOption = (sel) => [
+  sel.options[sel.selectedIndex].text,
+  sel.options[sel.selectedIndex].value,
+];
 
+mapAPI(coordinates);
 
 const fillSelect = (select, cities) => {
-
   for (const city of cities) {
-
     const option = document.createElement('option');
     const [cityName, cityValue] = city;
     option.textContent = cityName;
 
     if (typeof cityValue === 'object') {
-      option.style.fontWeight = 'bolder'
+      option.style.fontWeight = 'bolder';
       option.value = cityName;
-      option.textContent += ' р-н'
+      option.textContent += ' р-н';
     } else {
       option.value = cityValue;
     }
 
-
-    select.append(option)
+    select.append(option);
   }
-}
+};
 
-
-
-fillSelect(selectRegion, citiesList)
-
+fillSelect(selectRegion, citiesList);
 
 selectRegion.addEventListener('change', () => {
-  const cityValue = selectedOption(selectRegion)
+  const [cityName, cityValue] = selectedOption(selectRegion);
   selectVillage.innerHTML = null;
   const cities = citiesList.get(cityValue);
   const list = new Map();
   for (const city in cities) {
     const element = cities[city];
-    list.set(city, element)
+    list.set(city, element);
   }
   if (list.size > 0) {
-    selectVillage.disabled = false
+    selectVillage.disabled = false;
     selectVillage.classList.add('visible');
+    deliveryPoint.region = cityName;
   } else {
+    delete deliveryPoint.region;
     selectVillage.disabled = true;
     selectVillage.classList.remove('visible');
     coordinates = cityValue;
-    document.getElementById('map-overlay').textContent = coordinates;
-    mapAPI(coordinates)
-  };
-  fillSelect(selectVillage, list)
+    [deliveryPoint.distance, deliveryPoint.price] = mapAPI(coordinates);
+    deliveryPoint.city = `Місто ${cityName}`;
+  }
+  fillSelect(selectVillage, list);
 });
 
 selectVillage.addEventListener('change', () => {
-  coordinates = selectedOption(selectVillage);
-  document.getElementById('map-overlay').textContent = coordinates;
-  mapAPI(coordinates)
-})
+  const [cityName, cityValue] = selectedOption(selectVillage);
+  coordinates = cityValue;
+  [deliveryPoint.distance, deliveryPoint.price] = mapAPI(coordinates);
+  deliveryPoint.city = cityName;
+});
+
+const postBtn = document.getElementById('send');
+
+postBtn.addEventListener('click', async function () {
+  this.textContent = 'Загрузка';
+  let response = await fetch('serv.php', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8',
+    },
+    body: JSON.stringify(deliveryPoint),
+  }).then(() => {
+    setTimeout(() => {
+      this.textContent = 'Данные отправлены';
+    }, 1000);
+  });
+});
