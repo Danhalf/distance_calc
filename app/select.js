@@ -53,7 +53,11 @@ selectRegion.addEventListener('change', () => {
     selectVillage.disabled = true;
     selectVillage.classList.remove('visible');
     coordinates = cityValue;
-    [deliveryPoint.distance, deliveryPoint.price] = mapAPI(coordinates);
+    [
+      deliveryPoint.distance,
+      deliveryPoint.price,
+      deliveryPoint.pricePerKm,
+    ] = mapAPI(coordinates);
     deliveryPoint.city = `Місто ${cityName}`;
   }
   fillSelect(selectVillage, list);
@@ -62,7 +66,11 @@ selectRegion.addEventListener('change', () => {
 selectVillage.addEventListener('change', () => {
   const [cityName, cityValue] = selectedOption(selectVillage);
   coordinates = cityValue;
-  [deliveryPoint.distance, deliveryPoint.price] = mapAPI(coordinates);
+  [
+    deliveryPoint.distance,
+    deliveryPoint.price,
+    deliveryPoint.pricePerKm,
+  ] = mapAPI(coordinates);
   deliveryPoint.city = cityName;
 });
 
@@ -77,8 +85,6 @@ postBtn.addEventListener('click', async function () {
     },
     body: JSON.stringify(deliveryPoint),
   }).then(() => {
-    setTimeout(() => {
-      this.textContent = 'Данные отправлены';
-    }, 1000);
+    this.textContent = 'Данные отправлены';
   });
 });

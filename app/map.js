@@ -57,7 +57,8 @@ export const mapAPI = (coordinates) => {
 
   return [
     `${~~distance} км`,
-    `${~~(distance * pricePerKm)} грн. При цене ${pricePerKm} грн за км.`,
+    `${~~(distance * pricePerKm)} грн.`,
+    `${pricePerKm} грн за км.`,
   ];
 };
 
