@@ -14,7 +14,6 @@ export const mapAPI = (coordinates) => {
   map.scrollZoom.disable();
 
   coordinates = coordinates.split(',');
-  console.log(coordinates);
   const [lng, lan] = coordinates;
 
   const from = fromPoint; //lng, lat
@@ -34,15 +33,6 @@ export const mapAPI = (coordinates) => {
     .setLngLat(from) // marker position using variable 'from'
     .addTo(map); //add marker to map
 
-  // inputValue.addEventListener('change', () => {
-  //   console.log(inputValue.value);
-  //   markerTo.remove();
-  //   markerTo = new mapboxgl.Marker({
-  //     color: '#ffde3b',
-  //   })
-  //     .setLngLat(to)
-  //     .addTo(map); //add marker to map; // marker position using variable 'to'
-  // });
 
   const options = {
     units: 'kilometers',
